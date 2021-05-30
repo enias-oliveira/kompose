@@ -167,3 +167,82 @@ volumes:
 ```
 
 ---
+
+**Código com erro:**
+
+```
+DB=kompose
+USER=user
+PASSWORD=password
+```
+
+**Erros:**
+
+- Serviço com postgres precisa das váriaveis de ambiente e não vai achar sem o prefixo "POSTGRES\_"
+
+**O que ele causa:**
+
+- Serviço db não consegue ser inicializado
+
+**Como corrigir:**
+
+- Adicionar "POSTGRES\_" a todas variáveis de ambiente
+
+**Código corrigido:**
+
+```
+POSTGRES_DB=kompose
+POSTGRES_USER=user
+POSTGRES_PASSWORD=password
+```
+
+---
+
+**Código com erro:**
+
+```python
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgres",
+            "NAME": os.getenv("DB"),
+            "USER": os.getenv("USER"),
+            "PASSWORD": os.getenv("PASSWORD"),
+            "HOST": "database",
+            "PORT": 5432,
+        }
+    }
+
+```
+
+**Erros:**
+
+- getenv está pegando as váriaveis antigas
+- host deveria ser o nome do serviço de banco de dados
+
+**O que ele causa:**
+
+- Não acha as váriaveis necessárias para fazer a conexão
+- Não conecta com o serviço de banco de dados
+
+**Como corrigir:**
+
+- Adicionar "POSTGRES\_" a todas variáveis de ambiente do getenv
+- Mudar host para "db"
+
+**Código corrigido:**
+
+```python
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": os.getenv("POSTGRES_DB"),
+            "USER": os.getenv("POSTGRES_USER"),
+            "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
+            "HOST": "db",
+            "PORT": 5432,
+        }
+    }
+
+```
