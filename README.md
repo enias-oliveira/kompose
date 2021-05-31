@@ -246,3 +246,57 @@ else:
     }
 
 ```
+
+---
+
+**Código com erro:**
+
+```yaml
+migration:
+  build: .
+  env_file: envs/dev.env
+  command: bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; python manage.py migrate'
+
+  stdin_open: true
+  tty: true
+
+  depends_on:
+    - db
+```
+
+**Erros:**
+
+- Não foi feita a migration para a model "Song"
+
+**O que ele causa:**
+
+- Model desatualizada
+
+**Como corrigir:**
+
+- Tanto o serviço web como migrations precisam ver que a migration foi feita, então é preciso adicionar uma ponte ao serviço migration e entrar no container para fazer a migration
+
+**Código corrigido:**
+
+```yaml
+migration:
+  build: .
+  env_file: envs/dev.env
+  command: bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; python manage.py migrate'
+
+  volumes:
+    - .:/code
+
+  stdin_open: true
+  tty: true
+
+  depends_on:
+    - db
+```
+
+```sh
+maquina-real$: docker-compose down
+maquina-real$: docker-compose run migration bash
+container-migration: ./manage.py makemigration
+maquina-real$: docker-compose up --build
+```

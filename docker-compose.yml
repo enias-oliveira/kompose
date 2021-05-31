@@ -13,6 +13,9 @@ services:
     env_file: envs/dev.env
     command: bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; python manage.py migrate'
 
+    volumes:
+      - .:/code
+
     stdin_open: true
     tty: true
 
