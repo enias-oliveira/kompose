@@ -2,8 +2,6 @@
 
 ### Adicione aqui os erros e correções aplicadas
 
-### EXEMPLO
-
 ---
 
 **Código com erro:**
