@@ -149,4 +149,4 @@ STATIC_URL = "/static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-ALLOWED_HOSTS = ["https://enias-kompose.herokuapp.com"]
+ALLOWED_HOSTS = ["enias-kompose.herokuapp.com"]
