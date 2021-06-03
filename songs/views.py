@@ -15,7 +15,7 @@ class SongView(APIView):
 
         songs = Song.objects.all()
         serializer = SongSerializer(songs, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response([], status=status.HTTP_200_OK)
 
     def post(self, request):
         serializer = SongSerializer(data=request.data)
