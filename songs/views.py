@@ -20,6 +20,8 @@ class SongView(APIView):
     def post(self, request):
         serializer = SongSerializer(data=request.data)
 
+        #TESTE
+
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
