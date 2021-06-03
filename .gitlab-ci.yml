@@ -1,7 +1,9 @@
 test-job:
   stage: test
   script:
-    - docker-compose run -e TEST=TEST web bash
-    - coverage run ./manage.py test
+    - docker-compose run -e TEST=TEST web bash -c "coverage run ./manage.py test ; coverage xml"
   only:
     - merge_request
+  artifacts:
+    reports:
+      cobertura: coverage.xml
