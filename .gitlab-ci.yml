@@ -8,7 +8,7 @@ test-job:
 
 upload_to_heroku:
   script:
-    - git remote add heroku <https://heroku:d869af72-3901-4c71-98d4-5563d0b71fdd@git.heroku.com/enias-kompose.git>
+    - git remote add heroku https://heroku:d869af72-3901-4c71-98d4-5563d0b71fdd@git.heroku.com/enias-kompose.git
     - git push heroku HEAD:master
   only:
     - master
