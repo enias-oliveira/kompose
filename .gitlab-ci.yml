@@ -3,4 +3,4 @@ test-job:
   script:
     - docker-compose run -e TEST=TEST web python manage.py test
   only:
-    - pushes
+    - merge_request
